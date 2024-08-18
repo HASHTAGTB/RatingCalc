@@ -8,227 +8,253 @@
     <script defer src="https://pyscript.net/latest/pyscript.js"></script>
     <style>
         body {
-    font-family: 'Arial', sans-serif;
-    background-color: #f0f4f8;
-    color: #333;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    margin: 0;
+            font-family: 'Arial', sans-serif;
+            background-color: #f0f4f8;
+            color: #333;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .container {
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            max-width: 400px;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        h1 {
+            font-size: 2rem;
+            color: #0073e6;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        label {
+            font-weight: bold;
+        }
+
+        .container1, .container2, .container3, .container4 {
+            width: 100%;
+            border: solid transparent;
+            border-top-width: 10px;
+            border-right-width: 10px;
+            border-bottom-width: 0px;
+            border-left-width: 10px;
+            margin-bottom: 10px;
+        }
+
+        .rating-group {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+            margin-bottom: 10px;
+        }
+
+        .rating-group button {
+            width: 13%;
+            padding: 10px;
+            font-size: 1.2rem;
+            background-color: #e0e0e03d;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .rating-group button[data-value="F"].selected {
+            background-color: #ff7ffe; /* Pinkish Red */
+            color: #fff;
+        }
+
+        .rating-group button[data-value="D"].selected {
+            background-color: #4dc3cc; /* Orange */
+            color: #fff;
+        }
+
+        .rating-group button[data-value="C"].selected {
+            background-color: #4dbf4e; /* Yellow */
+            color: #fff;
+        }
+
+        .rating-group button[data-value="B"].selected {
+            background-color: #ddd901; /* Cyan */
+            color: #fff;
+        }
+
+        .rating-group button[data-value="A"].selected {
+            background-color: #ffbf7f; /* Light Green */
+            color: #fff;
+        }
+
+        .rating-group button[data-value="S"].selected {
+            background-color: #ff7f7e; /* Purple */
+            color: #fff;
+        }
+
+        .rating-group button[data-value="E"].selected {
+            background-color: #7f7fff; /* Light Purple */
+            color: #fff;
+        }
+
+        #result-container {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        #result {
+            width: 16%;
+            padding: 10px;
+            font-size: 1.2rem;
+            background-color: #e0e0e03d;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            text-align: center;
+            color: #fff;
+            transition: background-color 0.3s ease;
+        }
+
+        /* Specific colors for each result */
+        #result.result-S {
+            background-color: #ff7f7e; /* Purple */
+        }
+
+        #result.result-A {
+            background-color: #ffbf7f; /* Light Green */
+        }
+
+        #result.result-B {
+            background-color: #ddd901; /* Cyan */
+        }
+
+        #result.result-C {
+            background-color: #4dbf4e; /* Yellow */
+        }
+
+        #result.result-D {
+            background-color: #4dc3cc; /* Orange */
+        }
+
+        #result.result-E {
+            background-image: url("E.jpg");
+            background-repeat: no-repeat;
+            background-size: 100% 100%;
+            color: transparent;  
+            /* background-color: #7f7fff;  Light Purple */
+        }
+
+        #result.result-F {
+            background-color: #ff7ffe; /* Pinkish Red */
+        }
+
+        .button-container {
+    margin-top: 50px;
 }
 
-.container {
-    background: #fff;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    max-width: 400px;
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-h1 {
-    font-size: 2rem;
-    color: #0073e6;
-    margin-bottom: 20px;
-    text-align: center;
-}
-
-label {
-    font-weight: bold;
-}
-
-.container1, .container2, .container3, .container4 {
-    width: 100%;
-    border: solid transparent;
-    border-top-width: 10px;
-    border-right-width: 10px;
-    border-bottom-width: 0px;
-    border-left-width: 10px;
-    margin-bottom: 10px;
-}
-
-.rating-group {
-    display: flex;
-    justify-content: space-between;
-    width: 100%;
-    margin-bottom: 10px;
-}
-
-.rating-group button {
-    width: 16%;
-    padding: 10px;
+.button-container a {
+    display: inline-block;
+    padding: 10px 20px;
     font-size: 1.2rem;
-    background-color: #e0e0e03d;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-}
-
-.rating-group button[data-value="F"].selected {
-    background-color: #ff7ffe; /* Red */
     color: #fff;
-}
-
-.rating-group button[data-value="D"].selected {
-    background-color: #4dc3cc; /* Orange */
-    color: #fff;
-}
-
-.rating-group button[data-value="C"].selected {
-    background-color: #4dbf4e; /* Yellow */
-    color: #fff;
-}
-
-.rating-group button[data-value="B"].selected {
-    background-color: #ddd901; /* Light Blue */
-    color: #fff;
-}
-
-.rating-group button[data-value="A"].selected {
-    background-color: #ffbf7f; /* Light Green */
-    color: #fff;
-}
-
-.rating-group button[data-value="S"].selected {
-    background-color: #ff7f7e; /* Purple */
-    color: #fff;
-}
-
-button#calculate-btn {
     background-color: #0073e6;
-    color: #fff;
     border: none;
-    padding: 10px;
-    font-size: 1rem;
     border-radius: 4px;
-    cursor: pointer;
+    text-decoration: none;
+    text-align: center;
     transition: background-color 0.3s ease;
-    width: 100%;
 }
 
-button#calculate-btn:hover {
+.button-container a:hover {
     background-color: #005bb5;
 }
-
-#result-container {
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    margin-top: 20px;
-}
-
-#result {
-    width: 16%;
-    padding: 10px;
-    font-size: 1.2rem;
-    background-color: #e0e0e03d;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    text-align: center;
-    color: #fff;
-    transition: background-color 0.3s ease;
-}
-
-/* Specific colors for each result */
-#result.result-S {
-    background-color: #ff7f7e; /* Pink */
-}
-
-#result.result-A {
-    background-color: #ffbf7f; /* Darker Green */
-}
-
-#result.result-B {
-    background-color: #ddd901; /* Darker Cyan */
-}
-
-#result.result-C {
-    background-color: #4dbf4e; /* Darker Yellow */
-}
-
-#result.result-D {
-    background-color: #4dc3cc; /* Orange */
-}
-
-#result.result-F {
-    background-color: #ff7ffe; /* Pinkish Red */
-}
-
     </style>
 </head>
 <body>
 
-    <div class="container">
-        <h1>Rating Calculator</h1>
-    
-        <div class="container1">
-            <label for="rating1">Rating 1:</label>
-            <div class="rating-group" id="rating1">
-                <button data-value="F">F</button>
-                <button data-value="D">D</button>
-                <button data-value="C">C</button>
-                <button data-value="B">B</button>
-                <button data-value="A">A</button>
-                <button data-value="S">S</button>
-            </div>
-        </div>
-    
-        <div class="container2">
-            <label for="rating2">Rating 2:</label>
-            <div class="rating-group" id="rating2">
-                <button data-value="F">F</button>
-                <button data-value="D">D</button>
-                <button data-value="C">C</button>
-                <button data-value="B">B</button>
-                <button data-value="A">A</button>
-                <button data-value="S">S</button>
-            </div>
-        </div>
-    
-        <div class="container3">
-            <label for="rating3">Rating 3:</label>
-            <div class="rating-group" id="rating3">
-                <button data-value="F">F</button>
-                <button data-value="D">D</button>
-                <button data-value="C">C</button>
-                <button data-value="B">B</button>
-                <button data-value="A">A</button>
-                <button data-value="S">S</button>
-            </div>
-        </div>
-    
-        <div class="container4">
-            <label for="rating4">Rating 4:</label>
-            <div class="rating-group" id="rating4">
-                <button data-value="F">F</button>
-                <button data-value="D">D</button>
-                <button data-value="C">C</button>
-                <button data-value="B">B</button>
-                <button data-value="A">A</button>
-                <button data-value="S">S</button>
-            </div>
-        </div>
-    
-        <div id="result-container">
-            <p id="result"></p>
+<div class="container">
+    <h1>Rating Calculator</h1>
+
+    <div class="container1">
+        <label for="rating1">Rating 1:</label>
+        <div class="rating-group" id="rating1">
+            <button data-value="S">S</button>
+            <button data-value="A">A</button>
+            <button data-value="B">B</button>
+            <button data-value="C">C</button>
+            <button data-value="D">D</button>
+            <button data-value="E">E</button>
+            <button data-value="F">F</button>
         </div>
     </div>
-    
+
+    <div class="container2">
+        <label for="rating2">Rating 2:</label>
+        <div class="rating-group" id="rating2">
+            <button data-value="S">S</button>
+            <button data-value="A">A</button>
+            <button data-value="B">B</button>
+            <button data-value="C">C</button>
+            <button data-value="D">D</button>
+            <button data-value="E">E</button>
+            <button data-value="F">F</button>
+        </div>
+    </div>
+
+    <div class="container3">
+        <label for="rating3">Rating 3:</label>
+        <div class="rating-group" id="rating3">
+            <button data-value="S">S</button>
+            <button data-value="A">A</button>
+            <button data-value="B">B</button>
+            <button data-value="C">C</button>
+            <button data-value="D">D</button>
+            <button data-value="E">E</button>
+            <button data-value="F">F</button>
+        </div>
+    </div>
+
+    <div class="container4">
+        <label for="rating4">Rating 4:</label>
+        <div class="rating-group" id="rating4">
+            <button data-value="S">S</button>
+            <button data-value="A">A</button>
+            <button data-value="B">B</button>
+            <button data-value="C">C</button>
+            <button data-value="D">D</button>
+            <button data-value="E">E</button>
+            <button data-value="F">F</button>
+        </div>
+    </div>
+
+    <div id="result-container">
+        <p id="result"></p>
+    </div>
+</div>
+
+<div class="button-container">
+    <a href="https://hashtagtb.github.io/RatingCalc/help.html" target="_blank">3 ppl</a>
+</div>
 
 <py-script>
-    def convert(sth):
+def convert(sth):
     x = sth
     x = x.replace('S', '1')
     x = x.replace('A', '2')
     x = x.replace('B', '3')
     x = x.replace('C', '4')
     x = x.replace('D', '5')
-    x = x.replace('F', '6')
+    x = x.replace('E', '6')
+    x = x.replace('F', '7')
     return int(x)
 
 def calculate_rating(event=None):
@@ -267,6 +293,9 @@ def calculate_rating(event=None):
             result_text = 'D'
             result_class = 'result-D'
         elif round_result == 6:
+            result_text = 'E'
+            result_class = 'result-E'
+        elif round_result == 7:
             result_text = 'F'
             result_class = 'result-F'
         
