@@ -3,128 +3,225 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RatingCalc</title>
+    <title>PyScript Example</title>
     <link rel="stylesheet" href="https://pyscript.net/latest/pyscript.css" />
     <script defer src="https://pyscript.net/latest/pyscript.js"></script>
     <style>
         body {
-            font-family: 'Arial', sans-serif;
-            background-color: #f0f4f8;
-            color: #333;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-        }
+    font-family: 'Arial', sans-serif;
+    background-color: #f0f4f8;
+    color: #333;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
 
-        .container {
-            background: #fff;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            max-width: 300px;
-            width: 100%;
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-        }
+.container {
+    background: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    max-width: 400px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
 
-        h1 {
-            font-size: 2rem;
-            color: #0073e6;
-            margin-bottom: 20px;
-            text-align: center;
-        }
+h1 {
+    font-size: 2rem;
+    color: #0073e6;
+    margin-bottom: 20px;
+    text-align: center;
+}
 
-        label {
-            font-weight: bold;
-        }
+label {
+    font-weight: bold;
+}
 
-        select {
-            width: 100%;
-            padding: 10px;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            font-size: 1rem;
-        }
+.container1, .container2, .container3, .container4 {
+    width: 100%;
+    border: solid transparent;
+    border-top-width: 10px;
+    border-right-width: 10px;
+    border-bottom-width: 0px;
+    border-left-width: 10px;
+    margin-bottom: 10px;
+}
 
-        button {
-            background-color: #0073e6;
-            color: #fff;
-            border: none;
-            padding: 10px;
-            font-size: 1rem;
-            border-radius: 4px;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-        }
+.rating-group {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    margin-bottom: 10px;
+}
 
-        button:hover {
-            background-color: #005bb5;
-        }
+.rating-group button {
+    width: 16%;
+    padding: 10px;
+    font-size: 1.2rem;
+    background-color: #e0e0e03d;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
 
-        #result {
-            margin-top: 20px;
-            font-size: 1.5rem;
-            font-weight: bold;
-            color: #0073e6;
-            text-align: center;
-        }
+.rating-group button[data-value="F"].selected {
+    background-color: #ff7ffe; /* Red */
+    color: #fff;
+}
+
+.rating-group button[data-value="D"].selected {
+    background-color: #4dc3cc; /* Orange */
+    color: #fff;
+}
+
+.rating-group button[data-value="C"].selected {
+    background-color: #4dbf4e; /* Yellow */
+    color: #fff;
+}
+
+.rating-group button[data-value="B"].selected {
+    background-color: #ddd901; /* Light Blue */
+    color: #fff;
+}
+
+.rating-group button[data-value="A"].selected {
+    background-color: #ffbf7f; /* Light Green */
+    color: #fff;
+}
+
+.rating-group button[data-value="S"].selected {
+    background-color: #ff7f7e; /* Purple */
+    color: #fff;
+}
+
+button#calculate-btn {
+    background-color: #0073e6;
+    color: #fff;
+    border: none;
+    padding: 10px;
+    font-size: 1rem;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    width: 100%;
+}
+
+button#calculate-btn:hover {
+    background-color: #005bb5;
+}
+
+#result-container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+#result {
+    width: 16%;
+    padding: 10px;
+    font-size: 1.2rem;
+    background-color: #e0e0e03d;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    text-align: center;
+    color: #fff;
+    transition: background-color 0.3s ease;
+}
+
+/* Specific colors for each result */
+#result.result-S {
+    background-color: #ff7f7e; /* Pink */
+}
+
+#result.result-A {
+    background-color: #ffbf7f; /* Darker Green */
+}
+
+#result.result-B {
+    background-color: #ddd901; /* Darker Cyan */
+}
+
+#result.result-C {
+    background-color: #4dbf4e; /* Darker Yellow */
+}
+
+#result.result-D {
+    background-color: #4dc3cc; /* Orange */
+}
+
+#result.result-F {
+    background-color: #ff7ffe; /* Pinkish Red */
+}
+
     </style>
 </head>
 <body>
 
-<div class="container">
-    <h1>Rating Calculator</h1>
-
-    <label for="rating1">Rating 1:</label>
-    <select id="rating1">
-        <option value="S">S</option>
-        <option value="A">A</option>
-        <option value="B">B</option>
-        <option value="C">C</option>
-        <option value="D">D</option>
-        <option value="F">F</option>
-    </select>
-
-    <label for="rating2">Rating 2:</label>
-    <select id="rating2">
-        <option value="S">S</option>
-        <option value="A">A</option>
-        <option value="B">B</option>
-        <option value="C">C</option>
-        <option value="D">D</option>
-        <option value="F">F</option>
-    </select>
-
-    <label for="rating3">Rating 3:</label>
-    <select id="rating3">
-        <option value="S">S</option>
-        <option value="A">A</option>
-        <option value="B">B</option>
-        <option value="C">C</option>
-        <option value="D">D</option>
-        <option value="F">F</option>
-    </select>
-
-    <label for="rating4">Rating 4:</label>
-    <select id="rating4">
-        <option value="S">S</option>
-        <option value="A">A</option>
-        <option value="B">B</option>
-        <option value="C">C</option>
-        <option value="D">D</option>
-        <option value="F">F</option>
-    </select>
-
-    <button id="calculate-btn">Calculate Average Rating</button>
-
-    <p id="result"></p>
-</div>
+    <div class="container">
+        <h1>Rating Calculator</h1>
+    
+        <div class="container1">
+            <label for="rating1">Rating 1:</label>
+            <div class="rating-group" id="rating1">
+                <button data-value="F">F</button>
+                <button data-value="D">D</button>
+                <button data-value="C">C</button>
+                <button data-value="B">B</button>
+                <button data-value="A">A</button>
+                <button data-value="S">S</button>
+            </div>
+        </div>
+    
+        <div class="container2">
+            <label for="rating2">Rating 2:</label>
+            <div class="rating-group" id="rating2">
+                <button data-value="F">F</button>
+                <button data-value="D">D</button>
+                <button data-value="C">C</button>
+                <button data-value="B">B</button>
+                <button data-value="A">A</button>
+                <button data-value="S">S</button>
+            </div>
+        </div>
+    
+        <div class="container3">
+            <label for="rating3">Rating 3:</label>
+            <div class="rating-group" id="rating3">
+                <button data-value="F">F</button>
+                <button data-value="D">D</button>
+                <button data-value="C">C</button>
+                <button data-value="B">B</button>
+                <button data-value="A">A</button>
+                <button data-value="S">S</button>
+            </div>
+        </div>
+    
+        <div class="container4">
+            <label for="rating4">Rating 4:</label>
+            <div class="rating-group" id="rating4">
+                <button data-value="F">F</button>
+                <button data-value="D">D</button>
+                <button data-value="C">C</button>
+                <button data-value="B">B</button>
+                <button data-value="A">A</button>
+                <button data-value="S">S</button>
+            </div>
+        </div>
+    
+        <div id="result-container">
+            <p id="result"></p>
+        </div>
+    </div>
+    
 
 <py-script>
-def convert(sth):
+    def convert(sth):
     x = sth
     x = x.replace('S', '1')
     x = x.replace('A', '2')
@@ -135,38 +232,63 @@ def convert(sth):
     return int(x)
 
 def calculate_rating(event=None):
-    in1 = Element('rating1').value
-    in2 = Element('rating2').value
-    in3 = Element('rating3').value
-    in4 = Element('rating4').value
+    try:
+        in1 = Element('rating1').element.querySelector('.selected').getAttribute('data-value')
+        in2 = Element('rating2').element.querySelector('.selected').getAttribute('data-value')
+        in3 = Element('rating3').element.querySelector('.selected').getAttribute('data-value')
+        in4 = Element('rating4').element.querySelector('.selected').getAttribute('data-value')
 
-    c1 = convert(in1)
-    c2 = convert(in2)
-    c3 = convert(in3)
-    c4 = convert(in4)
+        c1 = convert(in1)
+        c2 = convert(in2)
+        c3 = convert(in3)
+        c4 = convert(in4)
 
-    calc = (c1 + c2 + c3 + c4) / 4
-    round_result = round(calc)
+        calc = (c1 + c2 + c3 + c4) / 4
+        round_result = round(calc)
 
-    result_text = ''
-    if calc == 1:
-        result_text = 'S'
-    elif round_result == 1:
-        result_text = 'A'
-    elif round_result == 2:
-        result_text = 'A'
-    elif round_result == 3:
-        result_text = 'B'
-    elif round_result == 4:
-        result_text = 'C'
-    elif round_result == 5:
-        result_text = 'D'
-    elif round_result == 6:
-        result_text = 'F'
-    
-    Element('result').write(f'Result: {result_text}')
+        result_text = ''
+        result_class = ''
+        if calc == 1:
+            result_text = 'S'
+            result_class = 'result-S'
+        elif round_result == 1:
+            result_text = 'A'
+            result_class = 'result-A'
+        elif round_result == 2:
+            result_text = 'A'
+            result_class = 'result-A'
+        elif round_result == 3:
+            result_text = 'B'
+            result_class = 'result-B'
+        elif round_result == 4:
+            result_text = 'C'
+            result_class = 'result-C'
+        elif round_result == 5:
+            result_text = 'D'
+            result_class = 'result-D'
+        elif round_result == 6:
+            result_text = 'F'
+            result_class = 'result-F'
+        
+        result_element = Element('result')
+        result_element.element.className = result_class
+        result_element.write(f'{result_text}')
+    except:
+        Element('result').write('')  # If not all buttons are selected, clear result
 
-Element("calculate-btn").element.onclick = calculate_rating
+def select_rating(button, rating_id):
+    group_buttons = Element(rating_id).element.querySelectorAll('button')
+    for btn in group_buttons:
+        btn.classList.remove('selected')
+    button.classList.add('selected')
+    calculate_rating()  # Call calculate_rating after selecting a button
+
+# Assign the onclick events for each button in each rating group
+for rating_id in ['rating1', 'rating2', 'rating3', 'rating4']:
+    buttons = Element(rating_id).element.querySelectorAll('button')
+    for button in buttons:
+        button.onclick = lambda e, rating_id=rating_id: select_rating(e.target, rating_id)
+
 </py-script>
 
 </body>
